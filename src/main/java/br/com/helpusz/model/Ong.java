@@ -1,5 +1,7 @@
 package br.com.helpusz.model;
 
+import org.springframework.data.annotation.Id;
+
 import br.com.helpusz.util.ONGActivityAreaENUM;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ong {
+	@Id
 	private int id;
 	private String name;
 	private String cnpj;

@@ -1,6 +1,9 @@
 package br.com.helpusz.model;
 
 import java.time.LocalDate;
+
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Activity {
+	@Id
 	private int id;
 	private String title;
 	private String description;

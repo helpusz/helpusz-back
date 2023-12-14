@@ -12,8 +12,7 @@ public class VolunteerService {
   @Autowired
   private VolunteerRepository volunteerRepository;
 
-  public void save(Volunteer volunteer) {
+  public void create(Volunteer volunteer) {
     volunteerRepository.save(volunteer);
   }
-  
 }

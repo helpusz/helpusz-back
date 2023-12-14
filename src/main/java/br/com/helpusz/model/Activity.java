@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Activity {
 	@Id
-	private int id;
+	private String id;
 	private String title;
 	private String description;
 	private LocalDate date;

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Volunteer {
 	@Id
-	private int id;
+	private String id;
 	private String name;
 	private String phone;
 	private String email;

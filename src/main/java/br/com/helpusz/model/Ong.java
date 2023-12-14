@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Ong {
 	@Id
-	private int id;
+	private String id;
 	private String name;
 	private String cnpj;
 	private String address;
@@ -20,10 +20,6 @@ public class Ong {
 	private ONGActivityAreaENUM activityArea;
 	private String email;
 	private String password;
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public Ong(String name, String cnpj, String address, String phone, ONGActivityAreaENUM activityArea, String email, String password) {
 		this.name = name;

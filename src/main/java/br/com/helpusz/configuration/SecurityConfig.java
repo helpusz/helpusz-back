@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import br.com.helpusz.service.VolunteerService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -15,6 +17,10 @@ public class SecurityConfig {
     return httpSecurity
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests(authorize -> authorize
+        .requestMatchers("/authorization/register").permitAll()
+        .requestMatchers("/authorization/login").permitAll()
+        .anyRequest().authenticated())
       .build();
   }
 }

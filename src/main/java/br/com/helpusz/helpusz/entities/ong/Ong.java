@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.entities.user;
+package br.com.helpusz.helpusz.entities.ong;
 
 import org.springframework.data.annotation.Id;
 
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class User {
+public class Ong {
   
   @Id
   private String id;

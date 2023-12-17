@@ -24,9 +24,9 @@ public class VolunteerController {
 
   @PostMapping("/login")
   public ResponseEntity login(@RequestBody Volunteer volunteer) {
-    this.volunteerService.login(volunteer);
-    
-    return ResponseEntity.ok().build();
+    String token = volunteerService.login(volunteer);
+      
+    return ResponseEntity.ok(token);
   }
   
   @GetMapping("/ping")

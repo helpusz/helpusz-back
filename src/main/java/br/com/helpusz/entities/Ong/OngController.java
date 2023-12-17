@@ -27,9 +27,9 @@ public class OngController {
 
   @PostMapping("/login")
   public ResponseEntity login(@RequestBody Ong ong) {
-    this.ongService.login(ong);
-    
-    return ResponseEntity.ok().build();
+      String token = ongService.login(ong);
+
+      return ResponseEntity.ok(token);
   }
   
   @GetMapping("/ping")

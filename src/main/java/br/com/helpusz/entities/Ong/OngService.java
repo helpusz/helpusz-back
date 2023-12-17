@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.entities.Ong;
+package br.com.helpusz.entities.Ong;
 
 import org.springframework.stereotype.Service;
 

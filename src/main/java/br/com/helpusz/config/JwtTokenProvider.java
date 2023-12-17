@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.config;
+package br.com.helpusz.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

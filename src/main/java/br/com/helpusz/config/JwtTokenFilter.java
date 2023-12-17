@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.config;
+package br.com.helpusz.config;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

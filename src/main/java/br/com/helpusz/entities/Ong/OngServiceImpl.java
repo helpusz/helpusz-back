@@ -1,10 +1,11 @@
-package br.com.helpusz.helpusz.entities.Ong;
+package br.com.helpusz.entities.Ong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.helpusz.helpusz.config.JwtTokenProvider;
+import br.com.helpusz.config.JwtTokenProvider;
+
 
 @Service
 public class OngServiceImpl implements OngService {

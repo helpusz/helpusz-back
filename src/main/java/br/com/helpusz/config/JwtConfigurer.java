@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.config;
+package br.com.helpusz.config;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.config;
+package br.com.helpusz.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

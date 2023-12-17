@@ -7,6 +7,6 @@ public interface OngService {
   
   void register(Ong ong);
 
-  void login(Ong ong);
+  String login(Ong ong);
   
 }

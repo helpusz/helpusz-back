@@ -25,6 +25,9 @@ public class SecurityConfig {
       .authorizeHttpRequests(authorize -> authorize
         .requestMatchers("/ong/register").permitAll()
         .requestMatchers("/ong/login").permitAll()
+        .requestMatchers("/volunteer/register").permitAll()
+        .requestMatchers("/volunteer/login").permitAll()
+
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

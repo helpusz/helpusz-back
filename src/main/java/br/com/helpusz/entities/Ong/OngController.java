@@ -1,5 +1,8 @@
 package br.com.helpusz.entities.Ong;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +33,10 @@ public class OngController {
   }
   
   @GetMapping("/ping")
-  public String ping() {
-    return "pong";
+  public ResponseEntity<Map<String, String>> ping() {
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "pongggg");
+    return ResponseEntity.ok(response);
   }
   
 }

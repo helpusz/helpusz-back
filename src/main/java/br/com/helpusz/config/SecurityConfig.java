@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Component
 @Configuration
@@ -17,9 +18,14 @@ public class SecurityConfig {
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
 
+  @Autowired
+  private CorsConfigurationSource corsConfigurationSource;
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
+      .cors().configurationSource(corsConfigurationSource)
+      .and()
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authorize -> authorize
@@ -27,7 +33,7 @@ public class SecurityConfig {
         .requestMatchers("/ong/login").permitAll()
         .requestMatchers("/volunteer/register").permitAll()
         .requestMatchers("/volunteer/login").permitAll()
-
+        .requestMatchers("/ong/ping").permitAll()
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

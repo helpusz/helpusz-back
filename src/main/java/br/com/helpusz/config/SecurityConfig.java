@@ -33,7 +33,6 @@ public class SecurityConfig {
         .requestMatchers("/ong/login").permitAll()
         .requestMatchers("/volunteer/register").permitAll()
         .requestMatchers("/volunteer/login").permitAll()
-        .requestMatchers("/ong/ping").permitAll()
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

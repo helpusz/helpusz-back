@@ -26,4 +26,4 @@ target/
 .vscode/launch.json
 target/classes/br/com/helpusz/helpusz/HelpuszApplication.class
 src/main/resources/crendetials.properties
-src/main/resources/application.properties
+# src/main/resources/application.properties

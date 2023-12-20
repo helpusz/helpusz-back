@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       
-      Volunteer volunteer = new Volunteer(user.getEmail(), user.getPassword(), user.getTypeAccount());
+      Volunteer volunteer = new Volunteer(user.getName(),user.getEmail(), user.getPassword(), user.getPhone());
       
       this.volunteerRepository.save(volunteer);
     }
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
       user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-      Ong ong = new Ong(user.getEmail(), user.getPassword(), user.getTypeAccount());
+      Ong ong = new Ong(user.getName(), user.getEmail(), user.getPassword(), user.getCnpj());
       
       this.ongRepository.save(ong);
     }

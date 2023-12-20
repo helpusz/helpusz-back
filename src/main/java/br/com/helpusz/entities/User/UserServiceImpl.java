@@ -74,10 +74,6 @@ public class UserServiceImpl implements UserService {
       Volunteer existingVolunteer = this.volunteerRepository.findByEmail(user.getEmail());
 
       this.verifyPassword(user.getPassword(), existingVolunteer.getPassword());
-
-      if(!passwordEncoder.matches(user.getPassword(), existingVolunteer.getPassword())) {
-        throw new RuntimeException("Senha inválida");
-      }
     }
 
     else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {

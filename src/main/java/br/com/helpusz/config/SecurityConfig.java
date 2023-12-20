@@ -29,10 +29,9 @@ public class SecurityConfig {
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authorize -> authorize
-        .requestMatchers("/ong/register").permitAll()
-        .requestMatchers("/ong/login").permitAll()
-        .requestMatchers("/volunteer/register").permitAll()
-        .requestMatchers("/volunteer/login").permitAll()
+        .requestMatchers("/user/register").permitAll()
+        .requestMatchers("/user/getToken").permitAll()
+
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface VolunteerService {
   
-  void register(Volunteer volunteer);
 
-  String login(Volunteer volunteer);
   
 }

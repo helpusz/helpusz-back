@@ -2,6 +2,7 @@ package br.com.helpusz.entities.Ong;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.helpusz.entities.User.TypeAccountEnum;
 import br.com.helpusz.entities.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,8 @@ public class Ong extends User {
   private String id;
   private String name;
   private String cnpj;
+
+  public Ong(String email, String password, TypeAccountEnum typeAccount) {
+  }
   
 }

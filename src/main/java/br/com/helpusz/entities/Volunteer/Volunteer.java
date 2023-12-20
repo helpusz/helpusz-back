@@ -2,6 +2,7 @@ package br.com.helpusz.entities.Volunteer;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.helpusz.entities.User.TypeAccountEnum;
 import br.com.helpusz.entities.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,9 @@ public class Volunteer extends User {
   private String id;
   private String name;
   private String phone;
+
+  public Volunteer(String email, String password, TypeAccountEnum typeAccount) {
+    super(email, password, typeAccount);
+  }
   
 }

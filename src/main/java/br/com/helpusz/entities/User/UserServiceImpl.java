@@ -1,7 +1,5 @@
 package br.com.helpusz.entities.User;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,39 +28,33 @@ public class UserServiceImpl implements UserService {
   @Override
   public void register(User user) {
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
-      Volunteer volunteer = (Volunteer) user;
-      
-      if(this.volunteerRepository.existsByEmail(volunteer.getEmail())) {
+      if(this.volunteerRepository.existsByEmail(user.getEmail())) {
         throw new RuntimeException("Já existe uma conta Voluntário com esse email");
       } 
 
-      volunteer.setPassword(passwordEncoder.encode(volunteer.getPassword()));
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
+      
+      Volunteer volunteer = new Volunteer(user.getEmail(), user.getPassword(), user.getTypeAccount());
       
       this.volunteerRepository.save(volunteer);
     }
 
     else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-      Ong ong = (Ong) user;
-
-      if(this.ongRepository.existsByEmail(ong.getEmail())) {
+      if(this.ongRepository.existsByEmail(user.getEmail())) {
         throw new RuntimeException("Já existe uma conta Ong com esse email");
       }
 
-      ong.setPassword(passwordEncoder.encode(ong.getPassword()));
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+      Ong ong = new Ong(user.getEmail(), user.getPassword(), user.getTypeAccount());
+      
       this.ongRepository.save(ong);
     }
   }
 
   @Override
   public String getToken(User user) {
-    if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
-      validateVolunteer((Volunteer) user);
-    }
-    
-    else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-      validateOng((Ong) user);
-    }
+    this.validateUser(user);
 
     String token = jwtTokenProvider.createToken(user.getEmail());
 
@@ -73,24 +65,33 @@ public class UserServiceImpl implements UserService {
     return token;
   }
 
-  private void validateVolunteer(Volunteer volunteer) {
-    if(!volunteerRepository.existsByEmail(volunteer.getEmail())) {
-      throw new RuntimeException("Conta de Voluntário não encontrada");
+  private void validateUser(User user) {
+    if(!volunteerRepository.existsByEmail(user.getEmail())) {
+      throw new RuntimeException("Usuário não encontrado");
+    }
+    
+    if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
+      Volunteer existingVolunteer = this.volunteerRepository.findByEmail(user.getEmail());
+
+      this.verifyPassword(user.getPassword(), existingVolunteer.getPassword());
+
+      if(!passwordEncoder.matches(user.getPassword(), existingVolunteer.getPassword())) {
+        throw new RuntimeException("Senha inválida");
+      }
     }
 
-    if(!passwordEncoder.matches(volunteer.getPassword(), volunteer.getPassword())) {
-      throw new RuntimeException("Senha de Voluntário inválida");
+    else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
+      Ong existingOng = this.ongRepository.findByEmail(user.getEmail());
+
+      this.verifyPassword(user.getPassword(), existingOng.getPassword());
+    }
+
+  }
+
+  private void verifyPassword(String password, String existingPassword) {
+    if(!passwordEncoder.matches(password, existingPassword)) {
+        throw new RuntimeException("Senha inválida");
     }
   }
 
-  private void validateOng(Ong ong) {
-    if(!ongRepository.existsByEmail(ong.getEmail())) {
-      throw new RuntimeException("Conta de Ong não encontrada");
-    }
-
-    if(!passwordEncoder.matches(ong.getPassword(), ong.getPassword())) {
-      throw new RuntimeException("Senha de Ong inválida");
-    }
-  }
-  
 }

@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   
   @Autowired
-  private UserService volunteerService;
+  private UserService userService;
 
   @PostMapping("/register")
   public ResponseEntity register(@RequestBody User user) {
-    this.volunteerService.register(user);
+    this.userService.register(user);
     
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping("/login")
+  @PostMapping("/getToken")
   public ResponseEntity login(@RequestBody User user) {
-    String token = volunteerService.getToken(user);
+    String token = userService.getToken(user);
       
     return ResponseEntity.ok(token);
   }

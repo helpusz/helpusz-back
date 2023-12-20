@@ -19,6 +19,7 @@ public class Ong extends User {
   private String cnpj;
 
   public Ong(String email, String password, TypeAccountEnum typeAccount) {
+    super(email, password, typeAccount);
   }
   
 }

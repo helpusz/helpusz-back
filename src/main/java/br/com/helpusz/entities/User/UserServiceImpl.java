@@ -9,6 +9,7 @@ import br.com.helpusz.entities.Ong.OngRepository;
 import br.com.helpusz.entities.Volunteer.Volunteer;
 import br.com.helpusz.entities.Ong.Ong;
 import br.com.helpusz.entities.Volunteer.VolunteerRepository;
+import br.com.helpusz.exception.HelpuszException;
 
 
 @Service
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
   public void register(User user) {
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
       if(this.volunteerRepository.existsByEmail(user.getEmail())) {
-        throw new RuntimeException("Já existe uma conta Voluntário com esse email");
+        throw new HelpuszException("Já existe uma conta Voluntário com esse email");
       } 
 
       user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
       if(this.ongRepository.existsByEmail(user.getEmail())) {
-        throw new RuntimeException("Já existe uma conta Ong com esse email");
+        throw new HelpuszException("Já existe uma conta Ong com esse email");
       }
 
       user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
   private void validateUser(User user) {
     if(!volunteerRepository.existsByEmail(user.getEmail())) {
-      throw new RuntimeException("Usuário não encontrado");
+      throw new HelpuszException("Usuário não encontrado");
     }
     
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
   private void verifyPassword(String password, String existingPassword) {
     if(!passwordEncoder.matches(password, existingPassword)) {
-        throw new RuntimeException("Senha inválida");
+        throw new HelpuszException("Senha inválida");
     }
   }
 

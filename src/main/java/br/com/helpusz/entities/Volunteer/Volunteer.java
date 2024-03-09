@@ -2,6 +2,7 @@ package br.com.helpusz.entities.Volunteer;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.helpusz.entities.Utils.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,13 @@ public class Volunteer {
   @NonNull
   private String name;
   @NonNull
-  private String email;
+  private Email email;
   @NonNull
   private String password;
   @NonNull
   private String phone;
 
-  public Volunteer(@NonNull String name, @NonNull String email, @NonNull String password, @NonNull String phone) {
+  public Volunteer(@NonNull String name, @NonNull Email email, @NonNull String password, @NonNull String phone) {
     this.name = name;
     this.email = email;
     this.password = password;

@@ -28,36 +28,46 @@ public class UserServiceImpl implements UserService {
   
   @Override
   public void register(User user) {
-    if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
-      if(this.volunteerRepository.existsByEmail(user.getEmail())) {
-        throw new HelpuszException("Já existe uma conta Voluntário com esse email");
-      } 
+    switch(user.getTypeAccount()) {
+      case VOLUNTEER:
+        registerVolunteer(user);
+        break;
 
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
-      
-      Volunteer volunteer = new Volunteer(user.getName(),user.getEmail(), user.getPassword(), user.getPhone());
-      
-      this.volunteerRepository.save(volunteer);
+      case ONG:
+        registerOng(user);
+        break;
+    }
+  }
+
+  public void registerVolunteer(User user) {
+    if(this.volunteerRepository.existsByEmail(user.getEmail())) {
+      throw new HelpuszException("Já existe uma conta Voluntário com esse email");
     }
 
-    else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-      if(this.ongRepository.existsByEmail(user.getEmail())) {
-        throw new HelpuszException("Já existe uma conta Ong com esse email");
-      }
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    
+    Volunteer volunteer = new Volunteer(user.getName(),user.getEmail(), user.getPassword(), user.getPhone());
+    
+    this.volunteerRepository.save(volunteer);
+  }
 
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-      Ong ong = new Ong(user.getName(), user.getEmail(), user.getPassword(), user.getCnpj());
-      
-      this.ongRepository.save(ong);
+  public void registerOng(User user) {
+    if(this.ongRepository.existsByEmail(user.getEmail())) {
+      throw new HelpuszException("Já existe uma conta Ong com esse email");
     }
+
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+    Ong ong = new Ong(user.getName(), user.getEmail(), user.getPassword(), user.getCnpj());
+    
+    this.ongRepository.save(ong);
   }
 
   @Override
   public String getToken(User user) {
     this.validateUser(user);
 
-    String token = jwtTokenProvider.createToken(user.getEmail());
+    String token = jwtTokenProvider.createToken(user.getEmail().getAddress());
 
     System.out.println("Login efetuado");
 

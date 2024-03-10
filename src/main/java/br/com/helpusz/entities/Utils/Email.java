@@ -17,7 +17,7 @@ public class Email {
 	}
 	
 	private boolean validateEmail(String address) {		
-		if(!address.contains("@") && !address.contains(".com")) {
+		if(!address.contains("@") || !address.contains(".com")) {
 			return false;
 		}
 		

@@ -10,7 +10,7 @@ import br.com.helpusz.exception.HelpuszException;
 
 public class CNPJTest {
 	
-		@Test
+	@Test
 	public void validCNPJ() {
 		String validCNPJ = "30533826000187";
 

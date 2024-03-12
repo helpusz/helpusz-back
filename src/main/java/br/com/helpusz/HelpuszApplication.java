@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"br.com.helpusz.helpusz.config", "br.com.helpusz.helpusz.entities.Ong"})
+@ComponentScan(basePackages = {"br.com.helpusz.helpusz.config"})
 public class HelpuszApplication {
 
 	public static void main(String[] args) {

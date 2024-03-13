@@ -31,9 +31,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-  # Restore from previous builds (if available)
 
-      - name: Set environment variables securely
-        env:
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}  # Access secrets directly (avoid intermediary steps)
+      - name: Set environment variables
+        run: echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml

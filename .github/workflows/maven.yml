@@ -14,17 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3  
+      - uses: actions/checkout@v3  # Checkout code from the repository
 
       - name: Set up JDK 17 (Temurin) with Cache
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: true  
+          cache: true  # Cache the JDK for faster execution
 
       - name: Restore Maven Cache (optional)
-        uses: actions/cache@v3  
+        uses: actions/cache@v3  # Consider enabling Maven cache for faster builds
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('pom.xml') }}
@@ -33,11 +33,11 @@ jobs:
 
       - name: Set environment variables securely
         env:
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}  
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}  # Access secrets directly (avoid intermediary steps)
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
       - name: Update dependency graph (optional)
-        uses: advanced-security/maven-dependency-submission-action@v5.x.x  
-        
+        uses: advanced-security/maven-dependency-submission-action@v5.x.x  # Specify a recent version
+        # Consider enabling this step based on your needs

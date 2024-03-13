@@ -15,17 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setar variaveis de ambiente
+      - name: Setar variáveis de ambiente
         run: echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
 
       - name: Configurar JDK 17
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: 17
 
       - name: Compilar
         run: mvn clean test
 
       - name: Artefatos
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: mvn deploy

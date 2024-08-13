@@ -1,6 +1,7 @@
 package br.com.helpusz.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,13 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
-  
+
   @Autowired
   private VolunteerRepository volunteerRepository;
 
   @Autowired
   private OngRepository ongRepository;
-  
+
   @Override
   public void register(User user) {
     switch(user.getTypeAccount()) {
@@ -41,25 +42,25 @@ public class UserServiceImpl implements UserService {
 
   public void registerVolunteer(User user) {
     if(this.volunteerRepository.existsByEmail(user.getEmail())) {
-      throw new HelpuszException("Já existe uma conta Voluntário com esse email");
+      throw new HelpuszException("Já existe uma conta Voluntário com esse email", HttpStatus.CONFLICT);
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    
+
     Volunteer volunteer = new Volunteer(user.getName(),user.getEmail(), user.getPassword(), user.getPhone());
-    
+
     this.volunteerRepository.save(volunteer);
   }
 
   public void registerOng(User user) {
     if(this.ongRepository.existsByEmail(user.getEmail())) {
-      throw new HelpuszException("Já existe uma conta Ong com esse email");
+      throw new HelpuszException("Já existe uma conta Ong com esse email", HttpStatus.CONFLICT);
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 
     Ong ong = new Ong(user.getName(), user.getEmail(), user.getPassword(), user.getCnpj());
-    
+
     this.ongRepository.save(ong);
   }
 
@@ -78,9 +79,9 @@ public class UserServiceImpl implements UserService {
 
   private void validateUser(User user) {
     if(!volunteerRepository.existsByEmail(user.getEmail())) {
-      throw new HelpuszException("Usuário não encontrado");
+      throw new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND);
     }
-    
+
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
       Volunteer existingVolunteer = this.volunteerRepository.findByEmail(user.getEmail());
 
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
   private void verifyPassword(String password, String existingPassword) {
     if(!passwordEncoder.matches(password, existingPassword)) {
-        throw new HelpuszException("Senha inválida");
+        throw new HelpuszException("Senha inválida", HttpStatus.UNAUTHORIZED);
     }
   }
 

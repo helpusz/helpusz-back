@@ -1,21 +1,23 @@
 package br.com.helpusz.entities.Utils;
 
+import org.springframework.http.HttpStatus;
+
 import br.com.helpusz.exception.HelpuszException;
 import lombok.Data;
 
 @Data
 public class CNPJ {
-	
+
 	private String number;
 
 	public CNPJ(String number) {
 		if(!validateCNPJ(number)) {
-			throw new HelpuszException("CNPJ inválido");
+			throw new HelpuszException("CNPJ inválido", HttpStatus.BAD_REQUEST);
 		}
 
 		this.number = number;
 	}
-	
+
 	private boolean validateCNPJ(String number) {
 		final int CNPJ_LENGTH = 14;
 
@@ -31,5 +33,5 @@ public class CNPJ {
 
 		return true;
 	}
-	
+
 }

@@ -1,6 +1,7 @@
 package br.com.helpusz.entities.Utils;
 
 import org.springframework.http.HttpStatus;
+import org.apache.commons.validator.routines.RegexValidator;
 
 import br.com.helpusz.exception.HelpuszException;
 import lombok.Data;
@@ -18,20 +19,9 @@ public class CNPJ {
 		this.number = number;
 	}
 
-	private boolean validateCNPJ(String number) {
-		final int CNPJ_LENGTH = 14;
-
-		if(number.length() != CNPJ_LENGTH) {
-			return false;
-		}
-
-		for(char c : number.toCharArray()) {
-			if(!Character.isDigit(c)) {
-				return false;
-			}
-		}
-
-		return true;
+	private boolean validateCNPJ(String cnpj) {
+    RegexValidator cnpjValidator = new RegexValidator("^\\d{14}$");
+    return cnpjValidator.isValid(cnpj);
 	}
 
 }

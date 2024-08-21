@@ -1,6 +1,7 @@
 package br.com.helpusz.entities.Utils;
 
 import org.springframework.http.HttpStatus;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import br.com.helpusz.exception.HelpuszException;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class Email {
 	}
 
 	private boolean validateEmail(String address) {
-		if(!address.contains("@") || !address.contains(".com")) {
+		if(!EmailValidator.getInstance().isValid(address)) {
 			return false;
 		}
 

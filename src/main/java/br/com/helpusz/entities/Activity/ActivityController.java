@@ -2,8 +2,12 @@ package br.com.helpusz.entities.Activity;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.helpusz.entities.Ong.Ong;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,8 +20,8 @@ public class ActivityController {
 	private ActivityService activityService;
 
 	@PostMapping("/create")
-  public ResponseEntity create(@RequestBody Activity activity) {
-    this.activityService.create(activity);
+  public ResponseEntity create(@AuthenticationPrincipal Ong ong, @RequestBody Activity activity) {
+    this.activityService.create(ong, activity);
 
     return ResponseEntity.ok().build();
   }

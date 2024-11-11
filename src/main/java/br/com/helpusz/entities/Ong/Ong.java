@@ -14,7 +14,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ong {
-  
+
   @Id
   private String id;
   @NonNull
@@ -25,12 +25,15 @@ public class Ong {
   private String password;
   @NonNull
   private CNPJ cnpj;
+	private String validationCode;
+	private boolean isValid = false;
 
   public Ong(@NonNull String name, @NonNull Email email, @NonNull String password, @NonNull CNPJ cnpj) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.cnpj = cnpj;
+		this.isValid = false;
   }
-  
+
 }

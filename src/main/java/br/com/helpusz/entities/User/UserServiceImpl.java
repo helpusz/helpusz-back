@@ -1,5 +1,7 @@
 package br.com.helpusz.entities.User;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +62,10 @@ public class UserServiceImpl implements UserService {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 
     Ong ong = new Ong(user.getName(), user.getEmail(), user.getPassword(), user.getCnpj());
+
+		String verificationCode = String.format("%04d", new Random().nextInt(10000));
+
+		ong.setValidationCode(verificationCode);
 
     this.ongRepository.save(ong);
   }

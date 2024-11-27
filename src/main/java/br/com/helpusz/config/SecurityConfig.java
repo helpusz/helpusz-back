@@ -31,7 +31,6 @@ public class SecurityConfig {
       .authorizeHttpRequests(authorize -> authorize
         .requestMatchers("/user/register").permitAll()
         .requestMatchers("/user/getToken").permitAll()
-
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

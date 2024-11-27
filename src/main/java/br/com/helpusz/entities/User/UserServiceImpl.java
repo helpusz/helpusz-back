@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import br.com.helpusz.config.JwtTokenProvider;
 import br.com.helpusz.entities.Ong.OngRepository;
+import br.com.helpusz.entities.Ong.OngService;
 import br.com.helpusz.entities.Volunteer.Volunteer;
 import br.com.helpusz.entities.Ong.Ong;
 import br.com.helpusz.entities.Volunteer.VolunteerRepository;
+import br.com.helpusz.entities.Volunteer.VolunteerService;
 import br.com.helpusz.exception.HelpuszException;
 
 
@@ -22,6 +24,12 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
+
+	@Autowired
+	private VolunteerService volunteerService;
+
+	@Autowired
+	private OngService ongService;
 
   @Autowired
   private VolunteerRepository volunteerRepository;
@@ -89,13 +97,13 @@ public class UserServiceImpl implements UserService {
     }
 
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
-      Volunteer existingVolunteer = this.volunteerRepository.findByEmail(user.getEmail());
+      Volunteer existingVolunteer = this.volunteerRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
       this.verifyPassword(user.getPassword(), existingVolunteer.getPassword());
     }
 
     else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-      Ong existingOng = this.ongRepository.findByEmail(user.getEmail());
+      Ong existingOng = this.ongRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("ONG não encontrada", HttpStatus.NOT_FOUND));
 
       this.verifyPassword(user.getPassword(), existingOng.getPassword());
     }
@@ -107,5 +115,16 @@ public class UserServiceImpl implements UserService {
         throw new HelpuszException("Senha inválida", HttpStatus.UNAUTHORIZED);
     }
   }
+
+	@Override
+	public void update(User user) {
+		if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
+			this.volunteerService.update(user);
+		}
+
+		else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
+			this.ongService.update(user);
+		}
+	}
 
 }

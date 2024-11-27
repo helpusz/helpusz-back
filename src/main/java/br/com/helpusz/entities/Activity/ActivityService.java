@@ -20,4 +20,6 @@ public interface ActivityService {
 
   List<Activity> getAll();
 
+	List<Activity> getAllByVolunteerId(User user);
+
 }

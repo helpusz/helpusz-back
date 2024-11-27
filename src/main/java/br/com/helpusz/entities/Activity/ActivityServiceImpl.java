@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.helpusz.entities.Ong.Ong;
 import br.com.helpusz.entities.Ong.OngRepository;
 import br.com.helpusz.entities.User.User;
+import br.com.helpusz.entities.Volunteer.Volunteer;
+import br.com.helpusz.entities.Volunteer.VolunteerRepository;
 import br.com.helpusz.exception.HelpuszException;
 
 @Service
@@ -20,6 +22,9 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Autowired
 	private OngRepository ongRepository;
+
+	@Autowired
+	private VolunteerRepository volunteerRepository;
 
 	@Override
 	public void create(@AuthenticationPrincipal Ong ong, Activity activity) {
@@ -73,6 +78,13 @@ public class ActivityServiceImpl  implements ActivityService {
 		}
 
 		return this.activityRepository.findAll();
+	}
+
+	@Override
+	public List<Activity> getAllByVolunteerId(User user) {
+		Volunteer volunteer = this.volunteerRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+
+		return this.activityRepository.findAllByVolunteersContains(volunteer.getId());
 	}
 
 }

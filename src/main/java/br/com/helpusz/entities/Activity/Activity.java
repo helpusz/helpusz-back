@@ -25,7 +25,8 @@ public class Activity {
 	private Date startDate;
 	private Date endDate;
 	private Date limitInscriptionDate;
-	private Number quantityVolunteers;
+	private Number quantityVolunteersAvailable;
+	private List<String> volunteers;
 	private ActivityStatusEnum actitivityStatusEnum;
 	private ActivityVisibilityEnum ActivityVisibilityEnum;
 	private List<String> tags;

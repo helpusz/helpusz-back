@@ -9,4 +9,6 @@ public interface VolunteerService {
 
 	void update(User user);
 
+	void enterIntoActivity(User user, String activityId);
+
 }

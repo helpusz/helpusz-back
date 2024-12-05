@@ -18,7 +18,8 @@ public class VolunteerServiceImpl implements VolunteerService {
 	@Autowired
 	private VolunteerRepository volunteerRepository;
 
-	@Autowired ActivityRepository activityRepository;
+	@Autowired
+	ActivityRepository activityRepository;
 
 	public void update(User user) {
 		Volunteer volunteer = this.volunteerRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));

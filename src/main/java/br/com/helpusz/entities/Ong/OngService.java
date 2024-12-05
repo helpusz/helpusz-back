@@ -7,8 +7,6 @@ import br.com.helpusz.entities.User.User;
 @Service
 public interface OngService {
 
-	void validate(Ong ong, String validationCode);
-
-	void update(User user);
+	void validate(User ong, String validationCode);
 
 }

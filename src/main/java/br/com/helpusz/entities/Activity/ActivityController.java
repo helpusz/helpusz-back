@@ -3,7 +3,6 @@ package br.com.helpusz.entities.Activity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.helpusz.entities.Ong.Ong;
 import br.com.helpusz.entities.User.User;
 
 import java.util.List;
@@ -29,6 +28,13 @@ public class ActivityController {
 	@PostMapping("/create/{ongId}")
   public ResponseEntity create(@PathVariable String ongId, @RequestBody Activity activity) {
     this.activityService.create(ongId, activity);
+
+    return ResponseEntity.ok().build();
+  }
+
+	@PostMapping("/enterIntoActivity")
+  public ResponseEntity enterIntoActivity(@RequestBody User user, String activityId) {
+    this.activityService.enterIntoActivity(user, activityId);
 
     return ResponseEntity.ok().build();
   }

@@ -1,18 +1,14 @@
 package br.com.helpusz.entities.Activity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
-import br.com.helpusz.entities.Ong.Ong;
-import br.com.helpusz.entities.Ong.OngRepository;
 import br.com.helpusz.entities.User.User;
-import br.com.helpusz.entities.Volunteer.Volunteer;
-import br.com.helpusz.entities.Volunteer.VolunteerRepository;
+import br.com.helpusz.entities.User.UserRepository;
 import br.com.helpusz.exception.HelpuszException;
 
 @Service
@@ -22,10 +18,7 @@ public class ActivityServiceImpl  implements ActivityService {
 	private ActivityRepository activityRepository;
 
 	@Autowired
-	private OngRepository ongRepository;
-
-	@Autowired
-	private VolunteerRepository volunteerRepository;
+	private UserRepository userRepository;
 
 	@Override
 	public void create(String ongId, Activity activity) {
@@ -41,7 +34,7 @@ public class ActivityServiceImpl  implements ActivityService {
 	public void update(User user, Activity activity) {
 		Activity activityToUpdate = this.activityRepository.findById(activity.getId()).orElseThrow(() -> new IllegalArgumentException("Atividade não encontrada"));
 
-		Ong ong = this.ongRepository.findByEmail(user.getEmail()).orElseThrow(() -> new IllegalArgumentException("ONG não encontrada"));
+		User ong = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new IllegalArgumentException("ONG não encontrada"));
 
 		if(!activityToUpdate.getOngId().equals(ong.getId())) {
 			throw new IllegalArgumentException("Você não tem permissão para atualizar essa atividade");
@@ -66,13 +59,40 @@ public class ActivityServiceImpl  implements ActivityService {
 	public void delete(User user, Activity activity) {
 		Activity activityToDelete = this.activityRepository.findById(activity.getId()).orElseThrow(() -> new IllegalArgumentException("Atividade não encontrada"));
 
-		Ong ong = this.ongRepository.findByEmail(user.getEmail()).orElseThrow(() -> new IllegalArgumentException("ONG não encontrada"));
+		User ong = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new IllegalArgumentException("ONG não encontrada"));
 
 		if(!activityToDelete.getOngId().equals(ong.getId())) {
 			throw new IllegalArgumentException("Você não tem permissão para deletar essa atividade");
 		}
 
-		this.ongRepository.delete(ong);
+		this.activityRepository.delete(activity);
+	}
+
+	public void enterIntoActivity(User user, String activityId) {
+		User volunteer = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+
+		Activity activity = this.activityRepository.findById(activityId).orElseThrow(() -> new HelpuszException("Atividade não encontrada", HttpStatus.NOT_FOUND));
+
+		if(activity.getLimitInscriptionDate().before(new Date())) {
+			throw new HelpuszException("A data limite para inscrição nessa atividade já foi atingida", HttpStatus.CONFLICT);
+		}
+
+		if(activity.getQuantityVolunteersAvailable().intValue() == 0) {
+			throw new HelpuszException("Não há mais vagas disponíveis para essa atividade", HttpStatus.CONFLICT);
+		}
+
+		if(activity.getActitivityStatusEnum().equals(ActivityStatusEnum.INACTIVE)) {
+			throw new HelpuszException("Essa atividade já está fechada", HttpStatus.CONFLICT);
+		}
+
+		if(activity.getVolunteers().contains(volunteer.getId())) {
+			throw new HelpuszException("Você já está inscrito nessa atividade", HttpStatus.CONFLICT);
+		}
+
+		activity.getVolunteers().add(volunteer.getId());
+		activity.setQuantityVolunteersAvailable(activity.getQuantityVolunteersAvailable().intValue() - 1);
+
+		this.activityRepository.save(activity);
 	}
 
 	@Override
@@ -88,7 +108,7 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Override
 	public List<Activity> getAllByVolunteerId(User user) {
-		Volunteer volunteer = this.volunteerRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+		User volunteer = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
 		return this.activityRepository.findAllByVolunteersContains(volunteer.getId());
 	}

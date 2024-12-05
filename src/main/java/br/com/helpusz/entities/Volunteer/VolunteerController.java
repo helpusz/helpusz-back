@@ -16,11 +16,5 @@ public class VolunteerController {
 	@Autowired
 	private VolunteerService volunteerService;
 
-	@PostMapping("/enterIntoActivity")
-  public ResponseEntity enterIntoActivity(@RequestBody User user, String activityId) {
-    this.volunteerService.enterIntoActivity(user, activityId);
-
-    return ResponseEntity.ok().build();
-  }
 
 }

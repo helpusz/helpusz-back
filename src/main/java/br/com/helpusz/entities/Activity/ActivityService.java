@@ -18,4 +18,6 @@ public interface ActivityService {
 
 	List<Activity> getAllByVolunteerId(User user);
 
+	void enterIntoActivity(User user, String activityId);
+
 }

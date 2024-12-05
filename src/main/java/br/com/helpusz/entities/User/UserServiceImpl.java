@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.helpusz.config.JwtTokenProvider;
-
+import br.com.helpusz.entities.Utils.Email;
 import br.com.helpusz.exception.HelpuszException;
 
 @Service
@@ -69,9 +69,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getByEmail(String email) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getByEmail'");
+	public User getByEmail(Email email) {
+		return userRepository.findByEmail(email).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 	}
 
 }

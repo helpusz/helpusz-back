@@ -16,7 +16,7 @@ public class OngServiceImpl implements OngService {
 
 	@Override
 	public void validate(User ong, String validationCode) {
-		if(ong.isValid()) {
+		if(ong.getIsValid()) {
 			throw new HelpuszException("Ong já validado", HttpStatus.CONFLICT);
 		}
 
@@ -25,7 +25,7 @@ public class OngServiceImpl implements OngService {
 		}
 
 		if(ong.getValidationCode().equals(validationCode)) {
-			ong.setValid(true);
+			ong.setIsValid(true);
 		}
 
 		this.userRepository.save(ong);

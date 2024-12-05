@@ -30,19 +30,21 @@ public class User {
   // Ong
   private CNPJ cnpj;
 	private String validationCode;
-	private boolean isValid;
+	private Boolean isValid;
 
-	public User(String name2, Email email2, String password2, String phone2) {
+	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, String phone2) {
 		this.name = name2;
 		this.email = email2;
 		this.password = password2;
+		this.typeAccount = typeAccount2;
 		this.phone = phone2;
 	}
 
-	public User(String name2, Email email2, String password2, CNPJ cnpj2) {
+	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, CNPJ cnpj2) {
 		this.name = name2;
 		this.email = email2;
 		this.password = password2;
+		this.typeAccount = typeAccount2;
 		this.cnpj = cnpj2;
   }
 

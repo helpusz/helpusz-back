@@ -19,19 +19,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-  public void registerVolunteer(User user) {
+  public void register(User user) {
     if(this.userRepository.existsByEmail(user.getEmail())) {
-      throw new HelpuszException("Já existe uma conta Voluntário com esse email", HttpStatus.CONFLICT);
+      throw new HelpuszException("Já existe uma conta com esse email", HttpStatus.CONFLICT);
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 
     if(user.getTypeAccount().equals(TypeAccountEnum.VOLUNTEER)) {
-			User volunteer = new User(user.getName(),user.getEmail(), user.getPassword(), user.getPhone());
+			User volunteer = new User(user.getName(), user.getEmail(), user.getPassword(), user.getTypeAccount(), user.getPhone());
 			this.userRepository.save(volunteer);
 		}
 		else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-			User ong = new User(user.getName(),user.getEmail(), user.getPassword(), user.getCnpj());
+			User ong = new User(user.getName(), user.getEmail(), user.getPassword(), user.getTypeAccount(), user.getCnpj());
+			ong.setIsValid(false);
 			this.userRepository.save(ong);
 		}
   }
@@ -66,14 +67,6 @@ public class UserServiceImpl implements UserService {
 	public void update(User user) {
 		// IMPLEMENTAR
 	}
-
-
-	@Override
-	public void register(User user) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'register'");
-	}
-
 
 	@Override
 	public User getByEmail(String email) {

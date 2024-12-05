@@ -1,5 +1,6 @@
 package br.com.helpusz.entities.Activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,11 @@ public class ActivityServiceImpl  implements ActivityService {
 	private VolunteerRepository volunteerRepository;
 
 	@Override
-	public void create(@AuthenticationPrincipal Ong ong, Activity activity) {
-		activity.setOngId(ong.getId());
+	public void create(String ongId, Activity activity) {
+		activity.setOngId(ongId);
+		activity.setVolunteers(new ArrayList<>());
+		activity.setActitivityStatusEnum(ActivityStatusEnum.ACTIVE);
+		activity.setActivityVisibilityEnum(ActivityVisibilityEnum.VISIBLE);
 
 		this.activityRepository.save(activity);
 	}
@@ -73,12 +77,14 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Override
 	public List<Activity> getAll() {
-		if(this.activityRepository.count() == 0) {
+		List<Activity> activities = this.activityRepository.findAll();
+		if(activities.isEmpty()) {
 			throw new HelpuszException("Não há nenhuma atividade cadastrada no momento", HttpStatus.NOT_FOUND);
 		}
 
-		return this.activityRepository.findAll();
+		return activities;
 	}
+
 
 	@Override
 	public List<Activity> getAllByVolunteerId(User user) {

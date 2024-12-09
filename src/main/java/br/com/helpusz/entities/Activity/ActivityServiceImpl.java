@@ -68,8 +68,8 @@ public class ActivityServiceImpl  implements ActivityService {
 		this.activityRepository.delete(activity);
 	}
 
-	public void enterIntoActivity(User user, String activityId) {
-		User volunteer = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+	public void enterIntoActivity(String userId, String activityId) {
+		User volunteer = this.userRepository.findById(userId).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
 		Activity activity = this.activityRepository.findById(activityId).orElseThrow(() -> new HelpuszException("Atividade não encontrada", HttpStatus.NOT_FOUND));
 

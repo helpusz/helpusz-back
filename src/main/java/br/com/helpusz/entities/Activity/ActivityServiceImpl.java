@@ -22,7 +22,10 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Override
 	public void create(String ongId, Activity activity) {
+		User ong = this.userRepository.findById(ongId).orElseThrow(() -> new HelpuszException("ONG não encontrada", HttpStatus.NOT_FOUND));
+
 		activity.setOngId(ongId);
+		activity.setOngCategory(ong.getCategory());
 		activity.setVolunteers(new ArrayList<>());
 		activity.setActitivityStatusEnum(ActivityStatusEnum.ACTIVE);
 		activity.setActivityVisibilityEnum(ActivityVisibilityEnum.VISIBLE);
@@ -41,6 +44,7 @@ public class ActivityServiceImpl  implements ActivityService {
 		}
 
 		activityToUpdate.setName(activity.getName());
+		activityToUpdate.setOngCategory(activity.getOngCategory());
 		activityToUpdate.setDescription(activity.getDescription());
 		activityToUpdate.setLocation(activity.getLocation());
 		activityToUpdate.setStartDate(activity.getStartDate());

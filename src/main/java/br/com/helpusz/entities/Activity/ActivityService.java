@@ -2,6 +2,7 @@ package br.com.helpusz.entities.Activity;
 
 import java.util.List;
 
+import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.User.User;
 
 public interface ActivityService {
@@ -17,6 +18,8 @@ public interface ActivityService {
   List<Activity> getAll();
 
 	List<Activity> getAllByVolunteerId(User user);
+
+	List<Activity> getAllByOngCategory(OngCategoryEnum category);
 
 	void enterIntoActivity(String userId, String activityId);
 

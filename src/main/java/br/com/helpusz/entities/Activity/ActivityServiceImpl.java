@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.User.User;
 import br.com.helpusz.entities.User.UserRepository;
 import br.com.helpusz.exception.HelpuszException;
@@ -115,6 +116,11 @@ public class ActivityServiceImpl  implements ActivityService {
 		User volunteer = this.userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 
 		return this.activityRepository.findAllByVolunteersContains(volunteer.getId());
+	}
+
+	@Override
+	public List<Activity> getAllByOngCategory(OngCategoryEnum category) {
+		return this.activityRepository.findAllByOngCategory(category);
 	}
 
 }

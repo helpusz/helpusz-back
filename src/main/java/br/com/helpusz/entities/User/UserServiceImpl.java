@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 			this.userRepository.save(volunteer);
 		}
 		else if(user.getTypeAccount().equals(TypeAccountEnum.ONG)) {
-			User ong = new User(user.getName(), user.getEmail(), user.getPassword(), user.getTypeAccount(), user.getCnpj());
+			User ong = new User(user.getName(), user.getEmail(), user.getPassword(), user.getTypeAccount(), user.getCnpj(), user.getCategory());
 			ong.setIsValid(false);
 			this.userRepository.save(ong);
 		}

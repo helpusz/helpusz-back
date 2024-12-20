@@ -11,6 +11,8 @@ public interface OngService {
 
 	List<User> getAllOngs();
 
+	List<User> getAllOngsByCategory(OngCategoryEnum category);
+
 	void validate(User ong, String validationCode);
 
 }

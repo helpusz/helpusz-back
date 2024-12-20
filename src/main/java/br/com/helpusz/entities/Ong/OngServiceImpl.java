@@ -39,4 +39,8 @@ public class OngServiceImpl implements OngService {
 		return userRepository.findAllByTypeAccount(TypeAccountEnum.ONG);
 	}
 
+	@Override
+	public List<User> getAllOngsByCategory(OngCategoryEnum category) {
+		return userRepository.findAllByCategory(category);
+	}
 }

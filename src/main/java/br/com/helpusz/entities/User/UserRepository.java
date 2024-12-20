@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.Utils.Email;
 
 public interface UserRepository extends MongoRepository<User, String> {
@@ -14,5 +15,7 @@ public interface UserRepository extends MongoRepository<User, String> {
   Optional<User> findByEmail(Email email);
 
 	List<User> findAllByTypeAccount(TypeAccountEnum typeAccount);
+
+	List<User> findAllByCategory(OngCategoryEnum category);
 
 }

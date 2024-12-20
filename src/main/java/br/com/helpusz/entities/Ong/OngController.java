@@ -24,6 +24,11 @@ public class OngController {
     return this.ongService.getAllOngs();
   }
 
+	@GetMapping("/getAllByCategory")
+  public List<User> getAllByCategory(@RequestBody OngCategoryEnum category) {
+    return this.ongService.getAllOngsByCategory(category);
+  }
+
 	@PostMapping("/validate")
   public void validate(@AuthenticationPrincipal User ong, @RequestBody String validationCode) {
     this.ongService.validate(ong, validationCode);

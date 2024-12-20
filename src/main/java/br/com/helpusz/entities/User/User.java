@@ -2,6 +2,7 @@ package br.com.helpusz.entities.User;
 
 import org.springframework.data.annotation.Id;
 
+import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.Utils.CNPJ;
 import br.com.helpusz.entities.Utils.Email;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,9 @@ public class User {
   private CNPJ cnpj;
 	private String validationCode;
 	private Boolean isValid;
+	private OngCategoryEnum category;
 
+	// Volunteer
 	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, String phone2) {
 		this.name = name2;
 		this.email = email2;
@@ -40,12 +43,14 @@ public class User {
 		this.phone = phone2;
 	}
 
-	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, CNPJ cnpj2) {
+	// Ong
+	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, CNPJ cnpj2, OngCategoryEnum category2) {
 		this.name = name2;
 		this.email = email2;
 		this.password = password2;
 		this.typeAccount = typeAccount2;
 		this.cnpj = cnpj2;
+		this.category = category2;
   }
 
 }

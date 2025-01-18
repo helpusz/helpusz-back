@@ -41,6 +41,12 @@ public class OngServiceImpl implements OngService {
 
 	@Override
 	public List<User> getAllOngsByCategory(OngCategoryEnum category) {
+		System.out.println(category);
+		boolean exists = userRepository.existsByCategory(category);
+		if(!exists) {
+			throw new HelpuszException("Ainda não existe nenhum ONG nessa categoria", HttpStatus.NOT_FOUND);
+		}
+
 		return userRepository.findAllByCategory(category);
 	}
 }

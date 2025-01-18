@@ -18,4 +18,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
 	List<User> findAllByCategory(OngCategoryEnum category);
 
+  boolean existsByCategory(OngCategoryEnum category);
+
 }

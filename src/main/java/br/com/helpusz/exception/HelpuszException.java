@@ -20,4 +20,9 @@ public class HelpuszException extends RuntimeException {
   public HttpStatus getStatus() {
     return status;
   }
+
+  @Override
+  public String toString() {
+    return String.format("%s: %s", this.getClass().getSimpleName(), this.getMessage());
+  }
 }

@@ -40,13 +40,19 @@ public class OngServiceImpl implements OngService {
 	}
 
 	@Override
+	public User getById(String id) {
+		return userRepository.findById(id).orElseThrow(() -> new HelpuszException("ONG não encontrada", HttpStatus.NOT_FOUND));
+	}
+
+	@Override
 	public List<User> getAllOngsByCategory(OngCategoryEnum category) {
 		System.out.println(category);
 		boolean exists = userRepository.existsByCategory(category);
 		if(!exists) {
-			throw new HelpuszException("Ainda não existe nenhum ONG nessa categoria", HttpStatus.NOT_FOUND);
+			throw new HelpuszException("Ainda não existe nenhuma ONG nessa categoria", HttpStatus.NOT_FOUND);
 		}
 
 		return userRepository.findAllByCategory(category);
 	}
+
 }

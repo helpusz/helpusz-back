@@ -1,19 +1,35 @@
 package br.com.helpusz.exception.handler;
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.helpusz.exception.HelpuszException;
 
-@ControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@RestControllerAdvice
 public class HelpuszHandler {
 
   @ExceptionHandler(HelpuszException.class)
-  public ResponseEntity<String> handleHelpuszException(HelpuszException ex) {
-    return new ResponseEntity<>(ex.getMessage(), ex.getStatus());
+  public ResponseEntity<ErrorResponse> handleHelpuszException(HelpuszException ex) {
+    ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getStatus().value());
+    return ResponseEntity.status(ex.getStatus()).body(errorResponse);
+  }
+
+  public static class ErrorResponse {
+    private String message;
+    private int status;
+
+    public ErrorResponse(String message, int status) {
+      this.message = message;
+      this.status = status;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+
+    public int getStatus() {
+      return status;
+    }
   }
 }

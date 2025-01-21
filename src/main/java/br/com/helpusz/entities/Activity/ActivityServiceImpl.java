@@ -120,6 +120,11 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Override
 	public List<Activity> getAllByOngCategory(OngCategoryEnum category) {
+		boolean exists = this.activityRepository.existsByOngCategory(category);
+		if(!exists) {
+			throw new HelpuszException("Ainda não existe nenhuma atividade nessa categoria", HttpStatus.NOT_FOUND);
+		}
+
 		return this.activityRepository.findAllByOngCategory(category);
 	}
 

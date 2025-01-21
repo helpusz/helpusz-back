@@ -25,6 +25,11 @@ public class OngController {
     return this.ongService.getAllOngs();
   }
 
+	@GetMapping("/getById")
+  public User getById(@RequestParam String id) {
+    return this.ongService.getById(id);
+  }
+
 	@GetMapping("/getAllByCategory")
 	public List<User> getAllByCategory(@RequestParam OngCategoryEnum category) {
 		return this.ongService.getAllOngsByCategory(category);

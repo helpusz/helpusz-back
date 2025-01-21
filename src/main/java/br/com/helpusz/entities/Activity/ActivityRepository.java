@@ -11,4 +11,6 @@ public interface ActivityRepository extends MongoRepository<Activity, String> {
 
 	List<Activity> findAllByOngCategory(OngCategoryEnum category);
 
+	boolean existsByOngCategory(OngCategoryEnum category);
+
 }

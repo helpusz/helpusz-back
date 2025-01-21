@@ -1,6 +1,7 @@
 package br.com.helpusz.entities.Activity;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
@@ -58,7 +59,7 @@ public class ActivityController {
 	}
 
 	@GetMapping("/getAllByOngCategory")
-	public ResponseEntity<List<Activity>> getAllByOngCategory(@RequestBody OngCategoryEnum category) {
+	public ResponseEntity<List<Activity>> getAllByOngCategory(@RequestParam OngCategoryEnum category) {
 		List<Activity> activities = this.activityService.getAllByOngCategory(category);
 
 		return ResponseEntity.ok(activities);

@@ -20,4 +20,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
   boolean existsByCategory(OngCategoryEnum category);
 
+  Optional<User> findById(Long id);
+
 }

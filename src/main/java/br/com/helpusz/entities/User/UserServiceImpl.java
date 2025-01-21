@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.helpusz.config.JwtTokenProvider;
 import br.com.helpusz.entities.Utils.Email;
+import br.com.helpusz.entities.Utils.SocialLinks;
 import br.com.helpusz.exception.HelpuszException;
 
 @Service
@@ -73,4 +74,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByEmail(email).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 	}
 
+	@Override
+  public void updateSocialLinks(String userId, SocialLinks socialLinks) {
+    User user = userRepository.findById(userId).orElseThrow(() -> new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+
+    user.setSocialLinks(socialLinks);
+
+    userRepository.save(user);
+  }
 }

@@ -9,5 +9,6 @@ public class SocialLinks {
 	private String instagram;
 	private String linkedin;
 	private String facebook;
+	private String site;
 
 }

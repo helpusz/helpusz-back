@@ -23,4 +23,6 @@ public interface ActivityService {
 
 	void enterIntoActivity(String userId, String activityId);
 
+  List<Activity> getActivitiesRegisteredByVolunteerId(String userId);
+
 }

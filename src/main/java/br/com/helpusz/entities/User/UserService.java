@@ -3,6 +3,7 @@ package br.com.helpusz.entities.User;
 import org.springframework.stereotype.Service;
 
 import br.com.helpusz.entities.Utils.Email;
+import br.com.helpusz.entities.Utils.SocialLinks;
 
 @Service
 public interface UserService {
@@ -14,5 +15,7 @@ public interface UserService {
 	User getByEmail(Email email);
 
 	void update(User user);
+
+	void updateSocialLinks(String userId, SocialLinks socialLinks);
 
 }

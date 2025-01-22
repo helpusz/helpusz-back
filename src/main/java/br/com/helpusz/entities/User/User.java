@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.Utils.CNPJ;
 import br.com.helpusz.entities.Utils.Email;
+import br.com.helpusz.entities.Utils.SocialLinks;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,8 @@ public class User {
   private String password;
   @NonNull
   private TypeAccountEnum typeAccount;
+
+	private SocialLinks socialLinks;
 
   // Volunteer
   private String phone;

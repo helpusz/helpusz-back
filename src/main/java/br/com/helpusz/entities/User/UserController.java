@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.helpusz.entities.Utils.Email;
+import br.com.helpusz.entities.Utils.SocialLinks;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,5 +51,10 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
+	@PatchMapping("/updateSocialLinks")
+	public ResponseEntity updateSocialLinks(@RequestParam String userId, @RequestBody SocialLinks socialLinks) {
+		userService.updateSocialLinks(userId, socialLinks);
 
+		return ResponseEntity.ok().build();
+	}
 }

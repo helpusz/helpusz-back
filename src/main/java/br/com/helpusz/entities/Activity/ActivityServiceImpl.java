@@ -128,4 +128,9 @@ public class ActivityServiceImpl  implements ActivityService {
 		return this.activityRepository.findAllByOngCategory(category);
 	}
 
+	@Override
+	public List<Activity> getActivitiesRegisteredByVolunteerId(String userId) {
+		return activityRepository.findAllByVolunteersContaining(userId);
+	}
+
 }

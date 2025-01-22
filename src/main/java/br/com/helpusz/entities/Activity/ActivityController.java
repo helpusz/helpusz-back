@@ -65,4 +65,9 @@ public class ActivityController {
 		return ResponseEntity.ok(activities);
 	}
 
+	@GetMapping("/getActivitiesRegisteredByVolunteerId/{userId}")
+    public List<Activity> getActivitiesRegisteredByVolunteerId(@PathVariable String userId) {
+			return activityService.getActivitiesRegisteredByVolunteerId(userId);
+    }
+
 }

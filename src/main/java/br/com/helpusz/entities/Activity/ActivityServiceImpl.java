@@ -133,4 +133,9 @@ public class ActivityServiceImpl  implements ActivityService {
 		return activityRepository.findAllByVolunteersContaining(userId);
 	}
 
+	@Override
+	public List<Activity> getAllByOngId(String ongId) {
+		return activityRepository.findAllByOngId(ongId);
+	}
+
 }

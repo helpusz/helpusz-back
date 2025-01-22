@@ -25,4 +25,6 @@ public interface ActivityService {
 
   List<Activity> getActivitiesRegisteredByVolunteerId(String userId);
 
+  List<Activity> getAllByOngId(String ongId);
+
 }

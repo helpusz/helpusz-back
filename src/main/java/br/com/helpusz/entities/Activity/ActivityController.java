@@ -66,8 +66,13 @@ public class ActivityController {
 	}
 
 	@GetMapping("/getActivitiesRegisteredByVolunteerId/{userId}")
-    public List<Activity> getActivitiesRegisteredByVolunteerId(@PathVariable String userId) {
-			return activityService.getActivitiesRegisteredByVolunteerId(userId);
-    }
+	public List<Activity> getActivitiesRegisteredByVolunteerId(@PathVariable String userId) {
+		return activityService.getActivitiesRegisteredByVolunteerId(userId);
+	}
+
+	@GetMapping("/getAllByOngId/{ongId}")
+	public List<Activity> getAllByOngId(@PathVariable String ongId) {
+		return activityService.getAllByOngId(ongId);
+	}
 
 }

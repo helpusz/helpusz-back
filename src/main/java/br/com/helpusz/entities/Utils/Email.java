@@ -11,6 +11,9 @@ public class Email {
 
 	private String address;
 
+	public Email() {
+	}
+
 	public Email(String address) {
 		if(!validateEmail(address)) {
 			throw new HelpuszException("Email inválido", HttpStatus.BAD_REQUEST);

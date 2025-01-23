@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import br.com.helpusz.Utils.Email;
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
-import br.com.helpusz.entities.Utils.Email;
 
 public interface UserRepository extends MongoRepository<User, String> {
 

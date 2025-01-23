@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.helpusz.entities.Utils.Email;
-import br.com.helpusz.entities.Utils.SocialLinks;
+import br.com.helpusz.Utils.Email;
+import br.com.helpusz.Utils.SocialLinks;
 
 import org.springframework.web.bind.annotation.RequestParam;
 

@@ -2,8 +2,8 @@ package br.com.helpusz.entities.User;
 
 import org.springframework.stereotype.Service;
 
-import br.com.helpusz.entities.Utils.Email;
-import br.com.helpusz.entities.Utils.SocialLinks;
+import br.com.helpusz.Utils.Email;
+import br.com.helpusz.Utils.SocialLinks;
 
 @Service
 public interface UserService {

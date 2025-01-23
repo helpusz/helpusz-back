@@ -1,4 +1,4 @@
-package br.com.helpusz.entities.Utils;
+package br.com.helpusz.Utils;
 
 import org.springframework.http.HttpStatus;
 import org.apache.commons.validator.routines.EmailValidator;

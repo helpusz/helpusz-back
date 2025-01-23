@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import br.com.helpusz.Utils.Email;
+import br.com.helpusz.Utils.SocialLinks;
 import br.com.helpusz.config.JwtTokenProvider;
-import br.com.helpusz.entities.Utils.Email;
-import br.com.helpusz.entities.Utils.SocialLinks;
 import br.com.helpusz.exception.HelpuszException;
 
 @Service

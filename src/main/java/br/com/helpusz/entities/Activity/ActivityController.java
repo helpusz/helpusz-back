@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.helpusz.Utils.EnterActivityRequest;
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
-import br.com.helpusz.entities.Utils.EnterActivityRequest;
 import br.com.helpusz.exception.HelpuszException;
 
 import java.util.List;

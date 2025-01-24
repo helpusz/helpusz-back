@@ -4,14 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.helpusz.Utils.Email;
 import br.com.helpusz.Utils.SocialLinks;
 import br.com.helpusz.config.JwtTokenProvider;
 import br.com.helpusz.exception.HelpuszException;
+import br.com.helpusz.services.S3Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+	@Autowired
+  private S3Service s3Service;
 
   private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -82,5 +87,16 @@ public class UserServiceImpl implements UserService {
     user.setSocialLinks(socialLinks);
 
     userRepository.save(user);
+  }
+
+	public String uploadProfilePhoto(String userId, MultipartFile file) throws Exception {
+    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    String profilePhotoUrl = s3Service.uploadFile(file, "profile-photos");
+
+    user.setProfilePhotoUrl(profilePhotoUrl);
+    userRepository.save(user);
+
+    return profilePhotoUrl;
   }
 }

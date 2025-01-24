@@ -36,6 +36,7 @@ public class User {
 	private String validationCode;
 	private Boolean isValid;
 	private OngCategoryEnum category;
+	private String profilePhotoUrl;
 
 	// Volunteer
 	public User(String name2, Email email2, String password2, TypeAccountEnum typeAccount2, String phone2) {

@@ -31,6 +31,7 @@ public class SecurityConfig {
       .authorizeHttpRequests(authorize -> authorize
         .requestMatchers("/user/register").permitAll()
         .requestMatchers("/user/getToken").permitAll()
+				.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
         .anyRequest().authenticated())
       .apply(new JwtConfigurer(jwtTokenProvider));
 

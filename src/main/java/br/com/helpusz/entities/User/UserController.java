@@ -2,7 +2,6 @@ package br.com.helpusz.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,18 +13,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.helpusz.Utils.Email;
 import br.com.helpusz.Utils.SocialLinks;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User Controller", description = "Endpoints para gerenciar usuários")
 public class UserController {
 
   @Autowired
   private UserService userService;
 
   @PostMapping("/register")
+	@Operation(summary = "Criar um novo usuário")
+	@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do usuário")
   public ResponseEntity register(@RequestBody User user) {
     this.userService.register(user);
 

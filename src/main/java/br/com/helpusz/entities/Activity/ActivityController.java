@@ -3,6 +3,7 @@ package br.com.helpusz.entities.Activity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.helpusz.Utils.EnterActivityRequest;
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
@@ -74,5 +75,16 @@ public class ActivityController {
 	public List<Activity> getAllByOngId(@PathVariable String ongId) {
 		return activityService.getAllByOngId(ongId);
 	}
+
+	@PostMapping("/{id}/activity-image")
+  public ResponseEntity<String> uploadActivityImage(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+    try {
+      String imageURL = activityService.uploadActivityImage(id, file);
+      return ResponseEntity.ok(imageURL);
+    }
+		catch(Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 
 }

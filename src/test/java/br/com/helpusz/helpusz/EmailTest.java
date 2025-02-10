@@ -1,4 +1,4 @@
-package br.com.helpusz.helpusz.entities.Utils;
+package br.com.helpusz.helpusz;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;

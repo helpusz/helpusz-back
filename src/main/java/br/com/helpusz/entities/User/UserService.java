@@ -1,9 +1,13 @@
 package br.com.helpusz.entities.User;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import br.com.helpusz.entities.Utils.Email;
-import br.com.helpusz.entities.Utils.SocialLinks;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import br.com.helpusz.Utils.DonationItem;
+import br.com.helpusz.Utils.Email;
+import br.com.helpusz.Utils.SocialLinks;
 
 @Service
 public interface UserService {
@@ -17,5 +21,12 @@ public interface UserService {
 	void update(User user);
 
 	void updateSocialLinks(String userId, SocialLinks socialLinks);
+
+  String uploadProfilePhoto(String id, MultipartFile file) throws Exception;
+
+  List<User> getAllVolunteers(String activityId);
+
+  User addDonationItem(String userId, DonationItem item);
+
 
 }

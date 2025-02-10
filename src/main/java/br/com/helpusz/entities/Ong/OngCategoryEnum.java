@@ -15,7 +15,7 @@ public enum OngCategoryEnum {
 	IGUALDADE_RACIAL("Igualdade Racial"),
 	IGUALDADE_DE_GENERO("Igualdade de Gênero"),
 	DIREITOS_DOS_IDOSOS("Direitos dos Idosos"),
-	INCLUSAO_DE_PESSOAS_COM_DEFICIENCIA("Inclusão de Pessoas com Deficiência");
+	INCLUSAO_DE_PESSOAS_COM_DEFICIENCIA("Inclusão de PCD");
 
 	private final String descricao;
 

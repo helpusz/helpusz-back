@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.User.User;
 import br.com.helpusz.entities.User.UserRepository;
 import br.com.helpusz.exception.HelpuszException;
+import br.com.helpusz.services.S3Service;
 
 @Service
 public class ActivityServiceImpl  implements ActivityService {
@@ -20,6 +22,9 @@ public class ActivityServiceImpl  implements ActivityService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+  private S3Service s3Service;
 
 	@Override
 	public void create(String ongId, Activity activity) {
@@ -132,5 +137,21 @@ public class ActivityServiceImpl  implements ActivityService {
 	public List<Activity> getActivitiesRegisteredByVolunteerId(String userId) {
 		return activityRepository.findAllByVolunteersContaining(userId);
 	}
+
+	@Override
+	public List<Activity> getAllByOngId(String ongId) {
+		return activityRepository.findAllByOngId(ongId);
+	}
+
+	public String uploadActivityImage(String userId, MultipartFile file) throws Exception {
+    Activity activity = activityRepository.findById(userId).orElseThrow(() -> new RuntimeException("Atividade não encontrada"));
+
+    String imageURL = s3Service.uploadFile(file, "activity-photos");
+
+    activity.setImageURL(imageURL);
+    activityRepository.save(activity);
+
+    return imageURL;
+  }
 
 }

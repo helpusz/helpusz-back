@@ -1,4 +1,4 @@
-package br.com.helpusz.entities.Utils;
+package br.com.helpusz.Utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

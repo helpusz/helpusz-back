@@ -1,4 +1,4 @@
-package br.com.helpusz.entities.Utils;
+package br.com.helpusz.Utils;
 
 import lombok.Data;
 
@@ -9,5 +9,6 @@ public class SocialLinks {
 	private String instagram;
 	private String linkedin;
 	private String facebook;
+	private String site;
 
 }

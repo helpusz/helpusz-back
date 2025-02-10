@@ -1,4 +1,4 @@
-package br.com.helpusz.entities.Utils;
+package br.com.helpusz.Utils;
 
 import org.springframework.http.HttpStatus;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -10,6 +10,9 @@ import lombok.Data;
 public class Email {
 
 	private String address;
+
+	public Email() {
+	}
 
 	public Email(String address) {
 		if(!validateEmail(address)) {

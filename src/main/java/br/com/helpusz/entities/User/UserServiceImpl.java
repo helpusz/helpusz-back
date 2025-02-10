@@ -1,16 +1,31 @@
 package br.com.helpusz.entities.User;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import br.com.helpusz.Utils.DonationItem;
+import br.com.helpusz.Utils.Email;
+import br.com.helpusz.Utils.SocialLinks;
 import br.com.helpusz.config.JwtTokenProvider;
-import br.com.helpusz.entities.Utils.Email;
-import br.com.helpusz.entities.Utils.SocialLinks;
+import br.com.helpusz.entities.Activity.Activity;
+import br.com.helpusz.entities.Activity.ActivityRepository;
 import br.com.helpusz.exception.HelpuszException;
+import br.com.helpusz.services.S3Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+	@Autowired
+  private S3Service s3Service;
 
   private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -19,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private ActivityRepository activityRepository;
 
   public void register(User user) {
     if(this.userRepository.existsByEmail(user.getEmail())) {
@@ -58,7 +76,7 @@ public class UserServiceImpl implements UserService {
     return token;
   }
 
-  private void verifyPassword(String password, String existingPassword) {
+  public void verifyPassword(String password, String existingPassword) {
     if(!passwordEncoder.matches(password, existingPassword)) {
 			throw new HelpuszException("Senha inválida", HttpStatus.UNAUTHORIZED);
     }
@@ -66,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(User user) {
-		// IMPLEMENTAR
+		userRepository.save(user);
 	}
 
 	@Override
@@ -82,4 +100,49 @@ public class UserServiceImpl implements UserService {
 
     userRepository.save(user);
   }
+
+	public String uploadProfilePhoto(String userId, MultipartFile file) throws Exception {
+    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    String profilePhotoUrl = s3Service.uploadFile(file, "profile-photos");
+
+    user.setProfilePhotoUrl(profilePhotoUrl);
+    userRepository.save(user);
+
+    return profilePhotoUrl;
+  }
+
+	public List<User> getAllVolunteers(String activityId) {
+    Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new RuntimeException("Atividade não encontrada"));
+
+    List<String> volunteerIds = activity.getVolunteers();
+
+		List<ObjectId> objectIds = volunteerIds.stream().map(ObjectId::new).collect(Collectors.toList());
+
+		List<User> volunteers = userRepository.findAllById(objectIds);
+
+    return volunteers;
+	}
+
+	public User addDonationItem(String userId, DonationItem item) {
+		Optional<User> userOpt = userRepository.findById(userId);
+
+		if(userOpt.isPresent()) {
+			User user = userOpt.get();
+
+			if(user.getTypeAccount() != TypeAccountEnum.ONG) {
+				throw new HelpuszException("Você não é um ONG.", HttpStatus.UNAUTHORIZED);
+			}
+
+			if(user.getDonationItems() == null) {
+				user.setDonationItems(new ArrayList<>());
+			}
+
+			user.getDonationItems().add(item);
+			return userRepository.save(user);
+	}
+		else {
+			throw new HelpuszException("Usuário não encontrado", HttpStatus.NOT_FOUND);
+		}
+	}
 }

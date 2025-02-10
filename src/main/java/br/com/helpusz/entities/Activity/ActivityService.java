@@ -2,6 +2,8 @@ package br.com.helpusz.entities.Activity;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import br.com.helpusz.entities.Ong.OngCategoryEnum;
 import br.com.helpusz.entities.User.User;
 
@@ -24,5 +26,9 @@ public interface ActivityService {
 	void enterIntoActivity(String userId, String activityId);
 
   List<Activity> getActivitiesRegisteredByVolunteerId(String userId);
+
+  List<Activity> getAllByOngId(String ongId);
+
+	String uploadActivityImage(String id, MultipartFile file) throws Exception;
 
 }
